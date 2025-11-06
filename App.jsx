@@ -1,31 +1,110 @@
-import { useState } from "react";
+import React, { useState } from 'react'
 
-function App() {
-  const images = [
-    "https://images.unsplash.com/photo-1530092285049-1c42085fd395?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmF0dXJlJTIwZmxvd2VyfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000",
-    "https://plus.unsplash.com/premium_photo-1664116928414-2ab998603666?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=687",
-    "https://images.unsplash.com/photo-1596605872817-7615f7ea2aac?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Zmxvd2VycyUyMG5hdHVyZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600"
-  ];
-
-  const [index, setIndex] = useState(0);
-
-  const prev = () => setIndex((index - 1 + images.length) % images.length);
-  const next = () => setIndex((index + 1) % images.length);
-
+// Header component
+function Header() {
   return (
-    <div className="img-slider">
-      <h1>Image Slider</h1>
-      <img
-        src={images[index]}
-        alt="slide"
-        style={{ width: "600px", height: "400px", objectFit: "cover" }}
-      />
-      <div className="slider-btns">
-        <button onClick={prev}>Left</button>
-        <button onClick={next}>Right</button>
-      </div>
-    </div>
-  );
+    <header style={{ padding: '1rem', background: '#282c34', color: 'white' }}>
+      <h1 style={{ margin: 0 }}>Product Search App</h1>
+    </header>
+  )
 }
 
-export default App;
+// Search component
+function Search({ value, onChange }) {
+  return (
+    <div style={{ padding: '0.75rem' }}>
+      <input
+        type="text"
+        placeholder="Search products..."
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        style={{
+          padding: '0.5rem',
+          width: '100%',
+          boxSizing: 'border-box',
+          border: '1px solid #ccc',
+          borderRadius: 4
+        }}
+      />
+    </div>
+  )
+}
+
+// Products component
+function Products({ items }) {
+  if (!items || items.length === 0)
+    return <p style={{ padding: '0.75rem' }}>No products found</p>
+
+  return (
+    <ul style={{ listStyle: 'none', padding: '0 0.75rem' }}>
+      {items.map((p, idx) => (
+        <li
+          key={idx}
+          style={{
+            padding: '0.5rem 0',
+            borderBottom: '1px solid #eee',
+            fontSize: '1rem'
+          }}
+        >
+          {p}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+// Footer component
+function Footer() {
+  return (
+    <footer
+      style={{
+        padding: '0.75rem',
+        textAlign: 'center',
+        color: '#666',
+        background: '#f9f9f9'
+      }}
+    >
+      © 2025 My Product App
+    </footer>
+  )
+}
+
+// Main App component
+function App() {
+  const allProducts = [
+    'Product A',
+    'Product B',
+    'Product C',
+    'Sample Item',
+    'Another Product',
+    'Product X',
+    'Super Item',
+    'Cool Gadget'
+  ]
+  const [query, setQuery] = useState('')
+
+  const filtered = allProducts.filter(p =>
+    p.toLowerCase().includes(query.trim().toLowerCase())
+  )
+
+  return (
+    <div
+      style={{
+        fontFamily: 'system-ui, sans-serif',
+        maxWidth: 720,
+        margin: '1.5rem auto',
+        border: '1px solid #ddd',
+        borderRadius: 6,
+        overflow: 'hidden',
+        boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
+      }}
+    >
+      <Header />
+      <Search value={query} onChange={setQuery} />
+      <Products items={filtered} />
+      <Footer />
+    </div>
+  )
+}
+
+export default App
