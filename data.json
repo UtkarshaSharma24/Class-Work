@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Utkarsh",
+      "email": "utkarsh@example.com"
+    },
+    {
+      "id": 2,
+      "name": "Aman",
+      "email": "aman@example.com"
+    }
+  ],
+  "products": [
+    {
+      "id": 101,
+      "title": "Laptop",
+      "price": 55000
+    },
+    {
+      "id": 102,
+      "title": "Headphones",
+      "price": 1500
+    }
+  ]
+}
